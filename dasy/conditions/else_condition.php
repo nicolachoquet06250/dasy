@@ -10,7 +10,16 @@ class else_condition implements module {
 	private function parse() {
 		$file_content = $this->file_content;
 
+		preg_replace_callback('`else[\ ]{0,}{([^\µ]+)\}`', function ($matches) use (&$file_content) {
+			$function = $matches[1];
 
+			$if = 'else ';
+			$if .= ' {';
+			$if .= $function;
+			$if .= '}';
+
+			$file_content = str_replace($matches[0], $if, $file_content);
+		}, $this->file_content);
 
 		$this->file_content = $file_content;
 		return $this;

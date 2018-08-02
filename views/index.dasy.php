@@ -1,42 +1,26 @@
-@$test->each(($value) => {
-	echo $value."<br>\n\n";
-});
-
-@for(($i=0, $max=10; $i<$max; $i++) => {
-	echo $i."<br>\n";
-});
-
-@var(i=0);
-@var(max=10);
-@global_const(TEST="lol");
-
-@while(($i < $max) => {
-	@if(($i>2) => {
-		echo $i."<br>\n";
-		$i++;
-	});
-});
-
 <php>
-	let i=0;
-
+	let i=2;
 	let max=10;
+	var toto='test';
 
-	const TEST='lol';
+	const TOTO2='test';
+	define TOTO3='toto';
 
-	define TEST2='test constante';
-
-	test->each( value => {
-		print value + '<br>\n\n';
-	});
-
-	for(i=0, max=10; i < max; i++) {
-		print i + '<br>\n';
+	if(i<2 || max==10) {
+		print 'test';
+	}
+	else if(i<2 || max!=10) {
+		print 'test2';
+	}
+	else if(i<2 && max!=10) {
+		print 'test4';
+	}
+	else {
+		print 'test3';
 	}
 
-	while(test > 2) {
-		if(i>2) {
-			print i+'<br>\n';
-		}
-	}
-</php>
+
+</php>²
+<?php
+	var_dump($i, $max, $toto, TOTO2, TOTO3);
+?>

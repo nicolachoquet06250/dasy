@@ -10,7 +10,7 @@ class constante implements module {
 	protected function parse() {
 		$file_content = $this->file_content;
 
-		preg_replace_callback('`\@global_const\(([a-zA-Z0-9\_\-]+)\=([^\)]+)\);`', function ($matches) use (&$file_content) {
+		preg_replace_callback('`define ([a-zA-Z0-9\_\-]+)\=([^\;]+);`', function ($matches) use (&$file_content) {
 			$var = '<?php ';
 			$var .= 'define(\''.$matches[1];
 			$var .= '\', ';
@@ -20,7 +20,7 @@ class constante implements module {
 			$file_content = str_replace($matches[0], $var, $file_content);
 		}, $this->file_content);
 
-		preg_replace_callback('`\@const\(([a-zA-Z0-9\_\-]+)\=([^\)]+)\);`', function ($matches) use (&$file_content) {
+		preg_replace_callback('`const ([a-zA-Z0-9\_\-]+)\=([^\;]+);`', function ($matches) use (&$file_content) {
 			$var = '<?php ';
 			$var .= 'const '.$matches[1];
 			$var .= '=';

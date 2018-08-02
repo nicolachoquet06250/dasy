@@ -10,12 +10,13 @@ class variable implements module {
 	protected function parse() {
 		$file_content = $this->file_content;
 
-		preg_replace_callback('`\@var\(([a-zA-Z0-9\_\-]+)\=([^\)]+)\);`', function ($matches) use (&$file_content) {
+		preg_replace_callback('`(let|var) ([a-zA-Z0-9\_\-\$]+)\=([^µ\;]+);\n`', function ($matches) use (&$file_content) {
 			$var = '<?php ';
-			$var .= '$'.$matches[1];
+			$var .= '$'.$matches[2];
 			$var .= '=';
-			$var .= $matches[2];
-			$var .= ' ?>';
+			$var .= $matches[3];
+			$var .= ';';
+			$var .= ' ?>'."\n";
 			$file_content = str_replace($matches[0], $var, $file_content);
 		}, $this->file_content);
 
