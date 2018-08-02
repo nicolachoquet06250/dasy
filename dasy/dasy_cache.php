@@ -11,6 +11,7 @@ class dasy_cache {
 	}
 
 	public static function create($file) {
+		self::init_directory();
 		if(gettype($file) === 'array' && !isset($file[0]) && count($file) > 0) {
 			foreach ($file as $filename => $filecontent) {
 				file_put_contents(self::$directory.'/'.base64_encode(basename($filename)).'.php', $filecontent);
