@@ -9,33 +9,49 @@ class foreach_loop implements module {
 
 	protected function parse() {
 		$file_content = $this->file_content;
-		preg_replace_callback('`\@(\$[a-zA-Z0-9\_\-]+)\-\>each\(\((\$[a-zA-Z0-9\-\_]+)\)\ \=\>\ \{([^\}\)]+)\}\);`', function ($matches) use (&$file_content) {
+		preg_replace_callback('`([a-zA-Z0-9\_]+)\-\>each[\ ]{0,}\([\ ]{0,}\(([a-zA-Z0-9\_]+)[\ ]{0,}\)[\ ]{0,}\=\>[\ ]{0,}\{([^;]+)\}\);`', function ($matches) use (&$file_content) {
+			$array_or_object = '$'.$matches[1];
+			$value = '$'.$matches[2];
+			$fonction = $matches[3];
+			$fonction = str_replace("\n", ";\n", $fonction);
+
 			$foreach = '<?php ';
 			$foreach .= 'foreach(';
-			$foreach .= $matches[1];
+			$foreach .= $array_or_object;
 			$foreach .= ' as ';
-			$foreach .= $matches[2];
+			$foreach .= $value;
 			$foreach .= ')';
 			$foreach .= ' {';
-			$foreach .= $matches[3];
+			$foreach .= $fonction;
 			$foreach .= '}';
 			$foreach .= ' ?>';
+			$foreach = str_replace('{;', '{', $foreach);
+
 			$file_content = str_replace($matches[0], $foreach, $file_content);
 		}, $this->file_content);
 
-		preg_replace_callback('`\@(\$[a-zA-Z0-9\_\-]+)\-\>each\(\((\$[a-zA-Z0-9\-\_]+)\, (\$[a-zA-Z0-9\-\_]+)\)\ \=\>\ \{([^\}\)]+)\}\);`', function ($matches) use (&$file_content) {
+		preg_replace_callback('`([a-zA-Z0-9\_]+)\-\>each[\ ]{0,}\([\ ]{0,}\([\ ]{0,}([a-zA-Z0-9\_]+)[\ ]{0,}[\ ]{0,}\=\>[\ ]{0,}([a-zA-Z0-9\_]+)[\ ]{0,}\)[\ ]{0,}\=\>[\ ]{0,}\{([^;]+)\}\);`', function ($matches) use (&$file_content) {
+			$array_or_object = '$'.$matches[1];
+			$key = '$'.$matches[2];
+			$value = '$'.$matches[3];
+			$fonction = $matches[4];
+			$fonction = str_replace("\n", ";\n", $fonction);
+
 			$foreach = '<?php ';
 			$foreach .= 'foreach(';
-			$foreach .= $matches[1];
+			$foreach .= $array_or_object;
 			$foreach .= ' as ';
-			$foreach .= $matches[2];
+			$foreach .= $key;
 			$foreach .= ' => ';
-			$foreach .= $matches[3];
+			$foreach .= $value;
 			$foreach .= ')';
 			$foreach .= ' {';
-			$foreach .= $matches[4];
+			$foreach .= $fonction;
 			$foreach .= '}';
 			$foreach .= ' ?>';
+			$foreach = str_replace('{;', '{', $foreach);
+			var_dump($foreach);
+
 			$file_content = str_replace($matches[0], $foreach, $file_content);
 		}, $this->file_content);
 		return $file_content;

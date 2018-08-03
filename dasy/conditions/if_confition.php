@@ -10,12 +10,15 @@ class if_confition implements module {
 	private function parse() {
 		$file_content = $this->file_content;
 
-		preg_replace_callback('`if[\ ]{0,}\(([a-zA-Z0-9\_\-\<\>\ \|\&\=\*\!\+\/]+)\)[\ ]{0,}{([^\µ]+)\}`', function ($matches) use (&$file_content) {
-			$condition = $matches[1];
+		preg_replace_callback('`(if|else\ if)[\ ]{0,}\(([a-zA-Z0-9\_\-\<\>\ \|\&\=\*\!\+\/]+)\)[\ ]{0,}{([^;]+)\}\;`', function ($matches) use (&$file_content) {
+			$keyword = $matches[1] === 'else if' ? 'elseif' : $matches[1];
+			$condition = $matches[2];
 			$new_cond = [];
-			$function = $matches[2];
+			$function = $matches[3];
 
-			preg_replace_callback('`([a-zA-Z0-9\<\>\ \=\\\'\"]+)`', function($matches) use (&$condition, &$new_cond) {
+			$function = str_replace("\n", ";\n", $function);
+
+			preg_replace_callback('`([a-zA-Z0-9\<\>\ \=\\\'\"\!]+)`', function($matches) use (&$condition, &$new_cond) {
 				$new_cond[] = $matches[1];
 			}, $condition);
 
@@ -35,13 +38,15 @@ class if_confition implements module {
 
 
 			$if = '<?php ';
-			$if .= 'if(';
+			$if .= $keyword.'(';
 			$if .= $condition;
 			$if .= ')';
 			$if .= ' {';
 			$if .= $function;
 			$if .= '}';
 			$if .= ' ?>';
+
+			$if = str_replace('{;', '{', $if);
 
 			$file_content = str_replace($matches[0], $if, $file_content);
 		}, $this->file_content);

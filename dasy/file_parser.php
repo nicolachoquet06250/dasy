@@ -8,24 +8,37 @@ class file_parser implements module {
 	}
 
 	protected function parse() {
+		$content = $this->file_content;
 		foreach ($this->php_blocs as $php_bloc) {
-//			var_dump($php_bloc);
+			$variable = (new variable($php_bloc[2]))->display();
+			$constante = (new constante($variable))->display();
+
+			$if = (new if_confition($constante))->display();
+			$else = (new else_condition($if))->display();
+			$elseif = (new elseif_condition($else))->display();
+			$switch = (new switch_condition($elseif))->display();
+
+			$foreach = (new foreach_loop($switch))->display();
+			$for = (new for_loop($foreach))->display();
+			$while = (new while_loop($for))->display();
+
+			$content = str_replace($php_bloc[0], $while, $content);
+			$content = str_replace("} ?>\n\t<?php", "\t}\n", $content);
 		}
-		$variable = (new variable($this->file_content))->display();
-		$constante = (new constante($variable))->display();
-
-		$if = (new if_confition($constante))->display();
-		$else = (new else_condition($if))->display();
-		$elseif = (new elseif_condition($else))->display();
+//		$variable = (new variable($this->file_content))->display();
+//		$constante = (new constante($variable))->display();
+//
+//		$if = (new if_confition($constante))->display();
+//		$else = (new else_condition($if))->display();
+//		$elseif = (new elseif_condition($else))->display();
 //		$switch = (new switch_condition($elseif))->display();
-
+//
 //		$foreach = (new foreach_loop($switch))->display();
 //		$for = (new for_loop($foreach))->display();
 //		$while = (new while_loop($for))->display();
-
-		$while = $elseif;
-		var_dump($while);
-		$this->file_content = $while;
+//
+/*		$this->file_content = str_replace("} ?>\n\t<?php", "\t}\n", $while);*/
+		$this->file_content = $content;
 		return $this;
 	}
 

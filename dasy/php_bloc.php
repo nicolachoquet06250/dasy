@@ -18,7 +18,7 @@ class php_bloc {
 		$contents = [];
 		if($php_bloc_parser->get_file()) {
 			$content = $php_bloc_parser->get_file(true);
-			preg_replace_callback('`(\<php\>)([^²]+)(\<\/php\>)`', function ($matches) use (&$contents) {
+			preg_replace_callback('`(\<php\>)([^²]+)(\<\/php\>)²`', function ($matches) use (&$contents) {
 				$contents[] = $matches;
 			}, $content);
 		}
