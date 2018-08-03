@@ -5,6 +5,8 @@
 	<title>{{page_title}}</title>
 </head>
 
+<body>
+
 <php>
 	let i=2;
 	let max=10;
@@ -61,6 +63,9 @@
 		$var1--
 	};
 
+</php>²
+
+<php>
 	dump(i);
 	dump(max);
 	dump(toto);
@@ -69,7 +74,7 @@
 	dump_constant(TOTO3);
 	<br>
 	dump(i === max && i > var1);
-
 </php>²
 
+</body>
 </html>

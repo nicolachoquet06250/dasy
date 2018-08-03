@@ -1,6 +1,6 @@
 <?php
 
 interface module {
-	public function __construct($file_content);
+	public static function create($file_content);
 	public function display();
 }

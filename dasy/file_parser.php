@@ -1,31 +1,53 @@
 <?php
 
-class file_parser implements module {
+class file_parser {
 	private $file_content, $php_blocs;
-	public function __construct($php_blocs, $file_path = '') {
+
+	/**
+	 * file_parser constructor.
+	 *
+	 * @param        $php_blocs
+	 * @param string $file_path
+	 * @throws Exception
+	 */
+	private function __construct($php_blocs, $file_path = '') {
+		if($file_path === '') {
+			throw new Exception('');
+		}
 		$this->file_content = file_get_contents($file_path);
 		$this->php_blocs = $php_blocs;
 	}
 
-	protected function parse() {
+	/**
+	 * @param        $php_blocs
+	 * @param string $file_path
+	 * @return file_parser
+	 * @throws Exception
+	 */
+	public static function create($php_blocs, $file_path = '') {
+		return new file_parser($php_blocs, $file_path);
+	}
+
+	private function parse() {
 		$content = $this->file_content;
 		foreach ($this->php_blocs as $php_bloc) {
-			$variable = (new variable($php_bloc[2]))->display();
-			$constante = (new constante($variable))->display();
+			$variable = variable::create($php_bloc[2])->display();
+			$constante = constante::create($variable)->display();
 
-			$if = (new if_confition($constante))->display();
-			$else = (new else_condition($if))->display();
-			$elseif = (new elseif_condition($else))->display();
-			$switch = (new switch_condition($elseif))->display();
+			$if = if_condition::create($constante)->display();
+			$else = else_condition::create($if)->display();
+			$elseif = elseif_condition::create($else)->display();
+			$switch = switch_condition::create($elseif)->display();
 
-			$foreach = (new foreach_loop($switch))->display();
-			$for = (new for_loop($foreach))->display();
-			$while = (new while_loop($for))->display();
+			$foreach = foreach_loop::create($switch)->display();
+			$for = for_loop::create($foreach)->display();
+			$while = while_loop::create($for)->display();
 
-			$dump = (new dump($while))->display();
+			$dump = dump::create($while)->display();
 
 			$content = str_replace($php_bloc[0], $dump, $content);
 			$content = str_replace("} ?>\n\t<?php", "\t}\n", $content);
+			$content = str_replace("} ?>\n\t\t<?php", "\t\t}\n", $content);
 		}
 		$this->file_content = $content;
 		return $this;

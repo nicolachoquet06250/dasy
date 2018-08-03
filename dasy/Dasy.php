@@ -39,15 +39,21 @@ class Dasy {
 	public function make($template = '', array $params = [], $file = true) {
 		self::complete_params($params);
 		if($file) {
-			dasy_cache::create([
-				self::genere_path($template) => (new file_parser(php_bloc::get_all(self::genere_path($template)), self::genere_path($template)))->display()
-			]);
+			$path = self::genere_path($template);
+			try {
+				dasy_cache::create([
+					$path => file_parser::create(php_bloc::get_all($path), $path)->display()
+				]);
+			} catch (Exception $e) {}
 			foreach ($params as $name => $value) {
 				$$name = $value;
 			}
 			include dasy_cache::get($template);
+			exit();
 		}
-		dasy_cache::create((new dasy_parser($this->directory))->parse()->display());
+		try {
+			dasy_cache::create(dasy_parser::create($this->directory)->display());
+		} catch (Exception $e) {}
 		return null;
 	}
 }

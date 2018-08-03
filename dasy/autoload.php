@@ -7,7 +7,7 @@ require_once "dasy_cache.php";
 
 require_once "functions/dump.php";
 
-require_once "conditions/if_confition.php";
+require_once "conditions/if_condition.php";
 require_once "conditions/else_condition.php";
 require_once "conditions/elseif_condition.php";
 require_once "conditions/switch_condition.php";

@@ -3,8 +3,12 @@
 class for_loop implements module {
 
 	private $file_content;
-	public function __construct($file_content) {
+	private function __construct($file_content) {
 		$this->file_content = $file_content;
+	}
+
+	public static function create($file_content) {
+		return new for_loop($file_content);
 	}
 
 	protected function parse() {

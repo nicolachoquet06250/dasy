@@ -3,8 +3,12 @@
 class dump implements module {
 
 	private $file_content;
-	public function __construct($file_content) {
+	private function __construct($file_content) {
 		$this->file_content = $file_content;
+	}
+
+	public static function create($file_content) {
+		return new dump($file_content);
 	}
 
 	private function parse() {
@@ -45,6 +49,9 @@ class dump implements module {
 
 					$expression = str_replace($matches[0], $local_expression.' '.$separator, $expression);
 				}, $expression);
+			}
+			else {
+				$expression = '$'.$expression;
 			}
 			$file_content = str_replace($matches[0], '<?php var_dump('.$expression.'); ?>', $file_content);
 		}, $file_content);
