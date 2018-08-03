@@ -2,7 +2,9 @@
 
 require_once "dasy/autoload.php";
 
-$test = ['toto', 'tata'];
-
-require Dasy::create('views')->make('index');
+Dasy::create('views')->make('index', [
+	'charset' => 'utf-8',
+	'page_title' => 'première page du gestionnaire de template',
+	'test' => ['toto', 'tata'],
+]);
 echo "\n";

@@ -5,6 +5,8 @@ require_once "interfaces/module.php";
 require_once "php_bloc.php";
 require_once "dasy_cache.php";
 
+require_once "functions/dump.php";
+
 require_once "conditions/if_confition.php";
 require_once "conditions/else_condition.php";
 require_once "conditions/elseif_condition.php";

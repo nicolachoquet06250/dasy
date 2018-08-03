@@ -1,3 +1,10 @@
+<!Doctype html>
+<html>
+<head>
+	<meta charset="{{charset}}" />
+	<title>{{page_title}}</title>
+</head>
+
 <php>
 	let i=2;
 	let max=10;
@@ -41,6 +48,10 @@
 		var_dump($value)
 	});
 
+	test->each((value) => {
+		var_dump($value)
+	});
+
 	for(let i=0, max=10; i < max; i++) {
 		print $i.'<br>'
 	};
@@ -50,7 +61,15 @@
 		$var1--
 	};
 
+	dump(i);
+	dump(max);
+	dump(toto);
+	<br>
+	dump_constant(TOTO2);
+	dump_constant(TOTO3);
+	<br>
+	dump(i === max && i > var1);
+
 </php>²
-<?php
-	var_dump($i, $max, $toto, TOTO2, TOTO3);
-?>
+
+</html>
