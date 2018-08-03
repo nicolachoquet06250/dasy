@@ -49,6 +49,7 @@ class Dasy {
 				$$name = $value;
 			}
 			include dasy_cache::get($template);
+			dasy_cache::delete($template);
 			exit();
 		}
 		try {

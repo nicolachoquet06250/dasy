@@ -3,10 +3,15 @@
 class dasy_cache {
 
 	private static $directory = 'dasy_cache';
+	private static $root_cache_diretory = './';
+
+	public static function set_root_cache_directory($directory) {
+		self::$root_cache_diretory = $directory;
+	}
 
 	public static function init_directory() {
 		if(!is_dir(self::$directory)) {
-			mkdir(self::$directory, 0777, true);
+			mkdir(self::$root_cache_diretory.'/'.self::$directory, 0777, true);
 		}
 	}
 
@@ -34,8 +39,8 @@ class dasy_cache {
 
 	public static function get($cache_file) {
 		$cache_file = base64_encode($cache_file.'.dasy.php').'.php';
-		if(is_file(self::$directory.'/'.$cache_file)) {
-			return self::$directory.'/'.$cache_file;
+		if(is_file(self::$root_cache_diretory.'/'.self::$directory.'/'.$cache_file)) {
+			return self::$root_cache_diretory.'/'.self::$directory.'/'.$cache_file;
 		}
 		return '';
 	}
@@ -43,7 +48,7 @@ class dasy_cache {
 	public static function delete($cache_file) {
 		$file = self::get($cache_file);
 		if($file) {
-			unset($file);
+			unlink($file);
 		}
 	}
 }
