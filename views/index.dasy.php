@@ -63,9 +63,6 @@
 		$var1--
 	};
 
-</php>²
-
-<php>
 	dump(i);
 	dump(max);
 	dump(toto);
