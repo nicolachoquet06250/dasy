@@ -2,6 +2,7 @@
 
 require_once "dasy/autoload.php";
 
+
 try {
 	Dasy::create('views')->make('index', [
 		'charset'    => 'utf-8',
@@ -9,7 +10,12 @@ try {
 		'test'       => ['toto', 'tata'],
 	]);
 	echo "\n";
-}
-catch (Exception $e) {
-	dasy_http_errors::create($e);
+} catch (DasyHttpException $e) {
+	try {
+		dasy_http_errors::create($e);
+	} catch (Exception $e) {
+		exit($e->getMessage());
+	}
+} catch (Exception $e) {
+	exit($e->getMessage());
 }

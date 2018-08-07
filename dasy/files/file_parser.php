@@ -45,7 +45,9 @@ class file_parser {
 
 			$dump = dump::create($while)->display();
 
-			$content = str_replace($php_bloc[0], $dump, $content);
+			$print = dasy_print::create($dump)->display();
+
+			$content = str_replace($php_bloc[0], $print, $content);
 			$content = str_replace("} ?>\n\t<?php", "\t}\n", $content);
 			$content = str_replace("} ?>\n\t\t<?php", "\t\t}\n", $content);
 		}

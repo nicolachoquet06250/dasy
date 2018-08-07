@@ -28,6 +28,11 @@ require_once "files/file_parser.php";
 require_once "php/php_bloc.php";
 
 // Dasy
+
+// Exceptions
+require_once "dasy/exceptions/DasyHttpException.php";
+
+//others
 require_once "dasy/dasy_cache.php";
 require_once "dasy/dasy_parser.php";
 require_once "dasy/dasy_http_errors.php";
