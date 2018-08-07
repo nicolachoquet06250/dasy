@@ -30,4 +30,5 @@ require_once "php/php_bloc.php";
 // Dasy
 require_once "dasy/dasy_cache.php";
 require_once "dasy/dasy_parser.php";
+require_once "dasy/dasy_http_errors.php";
 require_once "dasy/Dasy.php";
