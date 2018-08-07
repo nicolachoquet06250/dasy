@@ -16,6 +16,4 @@ try {
 	} catch (Exception $e) {
 		exit($e->getMessage());
 	}
-} catch (Exception $e) {
-	exit($e->getMessage());
 }

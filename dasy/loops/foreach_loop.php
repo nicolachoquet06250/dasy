@@ -13,7 +13,7 @@ class foreach_loop implements module {
 
 	protected function parse() {
 		$file_content = $this->file_content;
-		preg_replace_callback('`([a-zA-Z0-9\_]+)\-\>each[\ ]{0,}\([\ ]{0,}\(([a-zA-Z0-9\_]+)[\ ]{0,}\)[\ ]{0,}\=\>[\ ]{0,}\{([^;]+)\}\);`', function ($matches) use (&$file_content) {
+		preg_replace_callback('`([a-zA-Z0-9\_]+).each[\ ]{0,}\([\ ]{0,}\(([a-zA-Z0-9\_]+)[\ ]{0,}\)[\ ]{0,}\=\>[\ ]{0,}\{([^;]+)\}\);`', function ($matches) use (&$file_content) {
 			$array_or_object = '$'.$matches[1];
 			$value = '$'.$matches[2];
 			$fonction = $matches[3];
@@ -34,7 +34,7 @@ class foreach_loop implements module {
 			$file_content = str_replace($matches[0], $foreach, $file_content);
 		}, $this->file_content);
 
-		preg_replace_callback('`([a-zA-Z0-9\_]+)\-\>each[\ ]{0,}\([\ ]{0,}\([\ ]{0,}([a-zA-Z0-9\_]+)[\ ]{0,}[\ ]{0,}\=\>[\ ]{0,}([a-zA-Z0-9\_]+)[\ ]{0,}\)[\ ]{0,}\=\>[\ ]{0,}\{([^;]+)\}\);`', function ($matches) use (&$file_content) {
+		preg_replace_callback('`([a-zA-Z0-9\_]+).each[\ ]{0,}\([\ ]{0,}\([\ ]{0,}([a-zA-Z0-9\_]+)[\ ]{0,}[\ ]{0,}\,[\ ]{0,}([a-zA-Z0-9\_]+)[\ ]{0,}\)[\ ]{0,}\=\>[\ ]{0,}\{([^;]+)\}\);`', function ($matches) use (&$file_content) {
 			$array_or_object = '$'.$matches[1];
 			$key = '$'.$matches[2];
 			$value = '$'.$matches[3];
@@ -54,7 +54,6 @@ class foreach_loop implements module {
 			$foreach .= '}';
 			$foreach .= ' ?>';
 			$foreach = str_replace('{;', '{', $foreach);
-			var_dump($foreach);
 
 			$file_content = str_replace($matches[0], $foreach, $file_content);
 		}, $this->file_content);

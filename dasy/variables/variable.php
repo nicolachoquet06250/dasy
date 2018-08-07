@@ -19,7 +19,7 @@ class variable implements module {
 			$var .= '$'.$matches[2];
 			$var .= '=';
 			$var .= strstr($matches[3], '[{') || strstr($matches[3], ': {') || strstr($matches[3], ': [') || strstr($matches[3], ', {')
-				? 'json_decode(\''.$matches[3].'\')' : $matches[3];
+					? 'json_decode(\''.$matches[3].'\')' : $matches[3];
 			$var .= ';';
 			$var .= ' ?>'."\n";
 			$file_content = str_replace($matches[0], $var, $file_content);

@@ -46,11 +46,11 @@
 		}
 	};
 
-	my_array->each((value) => {
+	my_array.each((value) => {
 		var_dump($value)
 	});
 
-	test->each((value) => {
+	test.each((value) => {
 		var_dump($value)
 	});
 
@@ -71,6 +71,7 @@
 	dump_constant(TOTO3);
 	<br>
 	dump(i === max && i > var1);
+	<a href="test_page.php">Page test</a>
 </php>²
 
 </body>

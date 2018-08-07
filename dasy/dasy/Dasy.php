@@ -66,6 +66,7 @@ class Dasy {
 	/**
 	 * @param string $template
 	 * @param array  $params
+	 * @throws DasyHttpException
 	 * @throws Exception
 	 */
 	public function make($template = '', array $params = []) {
